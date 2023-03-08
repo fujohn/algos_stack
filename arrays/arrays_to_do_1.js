@@ -2,7 +2,11 @@
 // Given an array and an additional value, insert this value at the beginning of the array. 
 // You may use .push(), you are able do this without it though!
 function pushFront(arr, val) {
-    
+    for (var i = arr.length; i > 0; i--) {
+        arr[i] = arr[i-1];
+    };
+    arr[0] = val;
+    return arr;
 }
 
 console.log('Push Front:');
@@ -15,7 +19,8 @@ console.log(pushFront([99], 7)); // [7,99]
 // Given an array, remove and return the value at the beginning of the array. 
 // Prove the value is removed from the array by printing it. You may use .pop(), you are able do this without it though!
 function popFront(arr) {
-    
+    console.log('Remaining', arr.slice(1, arr.length));
+    return arr[0];
 }
 
 console.log('Pop Front:');
@@ -28,7 +33,11 @@ console.log(popFront([4,5,7,9])); // 4 returned, with [5,7,9] printed in the fun
 // Given an array, index, and additional value, insert the value into array at given index. 
 // You can think of pushFront(arr,val) as equivalent to insertAt(arr,0,val). You may use .push(), you are able do this without it though!
 function insertAt(arr, idx, val) {
-
+    for (var i = arr.length; i > idx; i--) {
+        arr[i] = arr[i-1];
+    }
+    arr[idx] = val;
+    return arr
 }
 
 console.log('Insert At:');
@@ -41,7 +50,14 @@ console.log(insertAt([9,33,7], 1, 42)); // [9,42,33,7]
 // Given an array and an index into array, remove and return the array value at that index. 
 // Prove the value is removed from the array by printing it. Think of popFront(arr) as equivalent to removeAt(arr,0).
 function removeAt(arr, idx) {
-
+    var value = arr[idx];
+    for (var i = idx; i < arr.length; i++) {
+        arr[i] = arr[i+1];
+    }
+    // console.log('Remaining',arr.slice(0, arr.length-1));
+    // return value; // this is the answer for the prompt
+    console.log(`Removed value: ${value}`)
+    return arr.slice(0, arr.length-1) // this is to be used for removeDupes
 }
 
 console.log('Remove At:');
@@ -53,7 +69,12 @@ console.log(removeAt([8,20,55,44,98], 3)); // 44 returned, with [8,20,55,98] pri
 // Swap Pairs
 // Swap positions of successive pairs of values of given array. If length is odd, do not change the final element.
 function swapPairs(arr) {
-
+    for (i=0; i<arr.length-1; i+=2) { // if only 1 element, for loop will not begin, if 3 elements, for loop goes through once, etc.
+        temp = arr[i]
+        arr[i] = arr[i+1];
+        arr[i+1] = temp;
+    }
+    return arr
 }
 
 console.log('Swap Pairs:');
@@ -67,7 +88,16 @@ console.log(swapPairs(["Brendan",true,42])); // [true,"Brendan",42]
 // If you already made the Remove At function, you are welcome to use that! 
 // If you solved this using nested loops, for an extra challenge, try to do it without any nested loops!
 function removeDupes(arr) {
-
+    var i = 0
+    while (i < arr.length - 1) {
+        if (arr[i] === arr[i+1]) {
+            arr = removeAt(arr, i+1); // arr must be saved, otherwise the returned value is not stored
+        } 
+        else {
+            i++;
+        }
+    }
+    return arr;
 }
 
 console.log('Remove Duplicates:');
